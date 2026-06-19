@@ -20,6 +20,9 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/mic615/chill/cmd/buckets"
+	"github.com/mic615/chill/cmd/groups"
+	"github.com/mic615/chill/cmd/objects"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -44,6 +47,9 @@ func Execute() {
 }
 
 func init() {
+	rootCmd.AddCommand(groups.GroupsCmd())
+	rootCmd.AddCommand(buckets.BucketsCmd())
+	rootCmd.AddCommand(objects.ObjectsCmd())
 	cobra.OnInitialize(initConfig)
 
 	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.chill-crate.yaml)")
