@@ -10,9 +10,10 @@ import (
 	"os"
 	"path/filepath"
 
-	"github.com/mic615/chill/internal/client"
 	"github.com/schollz/progressbar/v3"
 	"github.com/spf13/cobra"
+
+	"github.com/mic615/chill/internal/client"
 )
 
 var uploadCmd = &cobra.Command{

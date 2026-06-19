@@ -5,8 +5,9 @@ import (
 	"io"
 	"os"
 
-	"github.com/mic615/chill/internal/client"
 	"github.com/spf13/cobra"
+
+	"github.com/mic615/chill/internal/client"
 )
 
 var downloadCmd = &cobra.Command{
@@ -33,6 +34,5 @@ var downloadCmd = &cobra.Command{
 		}
 		fmt.Printf("downloaded %s -> %s\n", fileName, dest)
 		return nil
-
 	},
 }

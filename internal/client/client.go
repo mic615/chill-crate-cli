@@ -24,6 +24,7 @@ func New() *Client {
 		http:    &http.Client{Timeout: 30 * time.Second},
 	}
 }
+
 func (c *Client) doDownload(method, path string) (io.ReadCloser, error) {
 	req, err := http.NewRequest(method, c.baseURL+path, nil)
 	if err != nil {
@@ -34,19 +35,16 @@ func (c *Client) doDownload(method, path string) (io.ReadCloser, error) {
 		return nil, err
 	}
 	return resp.Body, nil
-
 }
+
 func (c *Client) doReader(method, path string, body io.Reader, size int64, out any) error {
-
 	req, err := http.NewRequest(method, c.baseURL+path, body)
-
 	if err != nil {
 		return err
 	}
 	req.ContentLength = size
 	req.Header.Set("Content-Type", "application/octet-stream")
 	return c.doRequest(req, out)
-
 }
 
 func (c *Client) do(method, path string, body, out any) error {
@@ -74,6 +72,7 @@ func (c *Client) doRequest(req *http.Request, out any) error {
 	if err != nil {
 		return err
 	}
+	defer resp.Body.Close()
 	if out != nil {
 		return json.NewDecoder(resp.Body).Decode(out)
 	}
@@ -81,7 +80,7 @@ func (c *Client) doRequest(req *http.Request, out any) error {
 }
 
 func (c *Client) send(req *http.Request) (*http.Response, error) {
-	//TODO Authorization: Bearer <token>
+	// TODO Authorization: Bearer <token>
 	if c.user != "" {
 		req.Header.Set("X-Stub-User", c.user)
 	}
@@ -96,7 +95,10 @@ func (c *Client) send(req *http.Request) (*http.Response, error) {
 		var apiErr struct {
 			Error string `json:"error"`
 		}
-		json.NewDecoder(resp.Body).Decode(&apiErr)
+		err := json.NewDecoder(resp.Body).Decode(&apiErr)
+		if err != nil {
+			return nil, err
+		}
 		if apiErr.Error != "" {
 			return nil, fmt.Errorf("%s: %s", resp.Status, apiErr.Error)
 		}

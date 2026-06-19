@@ -20,11 +20,12 @@ import (
 	"os"
 	"path/filepath"
 
+	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
+
 	"github.com/mic615/chill/cmd/buckets"
 	"github.com/mic615/chill/cmd/groups"
 	"github.com/mic615/chill/cmd/objects"
-	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 var cfgFile string
@@ -52,7 +53,8 @@ func init() {
 	rootCmd.AddCommand(objects.ObjectsCmd())
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.chill-crate.yaml)")
+	rootCmd.PersistentFlags().
+		StringVar(&cfgFile, "config", "", "config file (default is $HOME/.chill-crate.yaml)")
 }
 
 // initConfig reads in config file and ENV variables if set.

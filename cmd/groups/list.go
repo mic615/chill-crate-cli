@@ -9,9 +9,10 @@ import (
 	"os"
 	"text/tabwriter"
 
-	"github.com/mic615/chill/internal/client"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/mic615/chill/internal/client"
 )
 
 // listCmd represents the list command
@@ -22,7 +23,6 @@ var listCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		c := client.New()
 		groups, err := c.ListGroups()
-
 		if err != nil {
 			return fmt.Errorf("getting groups: %w", err)
 		}

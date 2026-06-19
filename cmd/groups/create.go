@@ -7,8 +7,9 @@ package groups
 import (
 	"fmt"
 
-	"github.com/mic615/chill/internal/client"
 	"github.com/spf13/cobra"
+
+	"github.com/mic615/chill/internal/client"
 )
 
 // createCmd represents the create command

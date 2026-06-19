@@ -8,9 +8,10 @@ import (
 	"fmt"
 
 	"github.com/manifoldco/promptui"
-	"github.com/mic615/chill/internal/client"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/mic615/chill/internal/client"
 )
 
 // useCmd represents the use command
@@ -21,7 +22,6 @@ var useCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		c := client.New()
 		groups, err := c.ListGroups()
-
 		if err != nil {
 			return fmt.Errorf("getting groups: %w", err)
 		}
@@ -30,7 +30,7 @@ var useCmd = &cobra.Command{
 			return nil
 		}
 		// current := viper.GetString("current_group")
-		var groupMap = make(map[string]string)
+		groupMap := make(map[string]string)
 		var groupNames []string
 		for _, g := range groups {
 			groupMap[g.Name] = g.ID
@@ -43,7 +43,7 @@ var useCmd = &cobra.Command{
 		}
 		_, result, err := prompt.Run()
 		if err != nil {
-			return fmt.Errorf("Prompt failed %v\n", err)
+			return fmt.Errorf("prompt failed %w", err)
 		}
 		viper.Set("current_group_name", result)
 		viper.Set("current_group_ID", groupMap[result])

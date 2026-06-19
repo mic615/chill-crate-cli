@@ -9,9 +9,10 @@ import (
 	"os"
 	"text/tabwriter"
 
-	"github.com/mic615/chill/internal/client"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
+
+	"github.com/mic615/chill/internal/client"
 )
 
 // listCmd represents the list command
@@ -23,7 +24,6 @@ var listCmd = &cobra.Command{
 		c := client.New()
 		groupID := viper.GetString("current_group_ID")
 		buckets, err := c.ListBuckets(groupID)
-
 		if err != nil {
 			return fmt.Errorf("getting buckets: %w", err)
 		}

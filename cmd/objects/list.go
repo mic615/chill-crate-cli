@@ -9,8 +9,9 @@ import (
 	"os"
 	"text/tabwriter"
 
-	"github.com/mic615/chill/internal/client"
 	"github.com/spf13/cobra"
+
+	"github.com/mic615/chill/internal/client"
 )
 
 // listCmd represents the list command
@@ -22,7 +23,6 @@ var listCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		c := client.New()
 		objects, err := c.ListObjects(args[0])
-
 		if err != nil {
 			return fmt.Errorf("getting objects: %w", err)
 		}
