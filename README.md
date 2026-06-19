@@ -31,7 +31,7 @@ On first use, `chill` reads `~/.chill-crate.yaml`. Pass `--config <path>` to ove
 chill login <user>
 ```
 
-Saves `user` to your local config. Token-based auth is coming — for now this sets the stub user sent on every request.
+Saves `user` to your local config. Token-based auth is coming, but for now this sets the stub user sent on every request.
 
 ### Groups
 
@@ -40,14 +40,36 @@ chill groups list              # list your groups
 chill groups create <name>     # create a new group (you're added as a member)
 ```
 
+### Buckets
+
+```bash
+chill buckets list             # list all buckets in your current group
+chill buckets create <name>    # create a new bucket in your current group
+```
+
+### Objects
+
+```bash
+chill objects list <bucket>                       # list all objects in a bucket
+chill objects upload <bucket> <filePath>          # upload a file to a bucket
+chill objects download <bucket> <filename> <dest> # download an object to a local path
+```
+
 ## Command Reference
 
 ```
 chill
 ├── login <user>
-└── groups
-    ├── list
-    └── create <name>
+├── groups
+│   ├── list
+│   └── create <name>
+├── buckets
+│   ├── list
+│   └── create <name>
+└── objects
+    ├── list <bucket>
+    ├── upload <bucket> <filePath>
+    └── download <bucket> <filename> <destination>
 ```
 
 ## Development
