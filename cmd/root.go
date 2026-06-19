@@ -34,7 +34,7 @@ var rootCmd = &cobra.Command{
 	Use:   "chill",
 	Short: "Chill Crate object storage, from your terminal",
 	Long: `chill is the command-line client for Chill Crate, a simple S3-style
-object store. It allows you to create resource groups, manage buckets, and push and pull objects
+object store. It allows you to create resource groups, manage buckets, and upload/download files from object storage
 from your terminal.`,
 }
 

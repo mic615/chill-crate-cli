@@ -5,13 +5,13 @@ Command-line client for [Chill Crate](../chill-crate-api), a simple S3-style obj
 ## Install
 
 ```bash
-go install github.com/mic615/chill-crate-cli@latest
+go install github.com/mic615/chill-crate-cli/cmd/chill@latest
 ```
 
 Or build from source:
 
 ```bash
-go build -o chill .
+go build -o chill ./cmd/chill
 ```
 
 ## Configuration
@@ -22,6 +22,8 @@ On first use, `chill` reads `~/.chill-crate.yaml`. Pass `--config <path>` to ove
 |-----|---------|-------------|
 | `api_url` | `http://localhost:8081` | Chill Crate API base URL |
 | `user` | — | Active user (set by `chill login`) |
+| `current_group_id` | — | The current group id (set by `chill groups use`) |
+| `current_group_name` | — | The current group name (set by `chill groups use`) |
 
 ## Usage
 
@@ -38,6 +40,7 @@ Saves `user` to your local config. Token-based auth is coming, but for now this 
 ```bash
 chill groups list              # list your groups
 chill groups create <name>     # create a new group (you're added as a member)
+chill groups use               # allows you to select one of your groups to work from
 ```
 
 ### Buckets
@@ -62,7 +65,8 @@ chill
 ├── login <user>
 ├── groups
 │   ├── list
-│   └── create <name>
+│   ├── create <name>
+│   └── use
 ├── buckets
 │   ├── list
 │   └── create <name>
@@ -81,7 +85,7 @@ Requires Go 1.26+ and a running [chill-crate-api](../chill-crate-api) instance.
 cd ../chill-crate-api && docker-compose up -d
 
 # run the CLI against the local API
-go run . groups list
+go run ./cmd/chill groups list
 ```
 
 ## License
