@@ -11,7 +11,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/mic615/chill/internal/client"
+	"github.com/mic615/chill-crate-cli/internal/client"
 )
 
 // listCmd represents the list command

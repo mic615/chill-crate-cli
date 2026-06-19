@@ -5,7 +5,7 @@ Command-line client for [Chill Crate](../chill-crate-api), a simple S3-style obj
 ## Install
 
 ```bash
-go install github.com/mic615/chill@latest
+go install github.com/mic615/chill-crate-cli@latest
 ```
 
 Or build from source:

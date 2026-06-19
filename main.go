@@ -15,7 +15,7 @@ limitations under the License.
 */
 package main
 
-import "github.com/mic615/chill/cmd"
+import "github.com/mic615/chill-crate-cli/cmd"
 
 func main() {
 	cmd.Execute()

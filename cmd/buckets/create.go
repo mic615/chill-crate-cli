@@ -10,7 +10,7 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/mic615/chill/internal/client"
+	"github.com/mic615/chill-crate-cli/internal/client"
 )
 
 // createCmd represents the create command

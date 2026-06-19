@@ -91,4 +91,4 @@ formatters:
           replacement: 'any'
     goimports:
       local-prefixes:
-        - github.com/mic615/chill
+        - github.com/mic615/chill-crate-cli

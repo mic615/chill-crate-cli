@@ -23,9 +23,9 @@ import (
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 
-	"github.com/mic615/chill/cmd/buckets"
-	"github.com/mic615/chill/cmd/groups"
-	"github.com/mic615/chill/cmd/objects"
+	"github.com/mic615/chill-crate-cli/cmd/buckets"
+	"github.com/mic615/chill-crate-cli/cmd/groups"
+	"github.com/mic615/chill-crate-cli/cmd/objects"
 )
 
 var cfgFile string
