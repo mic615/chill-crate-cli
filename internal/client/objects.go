@@ -37,3 +37,11 @@ func (c *Client) ListObjects(bucketID string) ([]Object, error) {
 	err := c.do("GET", fmt.Sprintf("/buckets/%s/objects", bucketID), nil, &objects)
 	return objects, err
 }
+
+func (c *Client) DeleteObject(bucketID, fileName string) error {
+	return c.do("DELETE", fmt.Sprintf("/buckets/%s/objects/%s", bucketID, fileName), nil, nil)
+}
+
+func (c *Client) RestoreObject(bucketID, fileName string) error {
+	return c.do("POST", fmt.Sprintf("/buckets/%s/objects/%s/restore", bucketID, fileName), nil, nil)
+}

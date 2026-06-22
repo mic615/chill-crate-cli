@@ -2,6 +2,7 @@ package client
 
 import (
 	"bytes"
+	"context"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -26,7 +27,7 @@ func New() *Client {
 }
 
 func (c *Client) doDownload(method, path string) (io.ReadCloser, error) {
-	req, err := http.NewRequest(method, c.baseURL+path, nil)
+	req, err := http.NewRequestWithContext(context.Background(), method, c.baseURL+path, nil)
 	if err != nil {
 		return nil, err
 	}
@@ -38,7 +39,7 @@ func (c *Client) doDownload(method, path string) (io.ReadCloser, error) {
 }
 
 func (c *Client) doReader(method, path string, body io.Reader, size int64, out any) error {
-	req, err := http.NewRequest(method, c.baseURL+path, body)
+	req, err := http.NewRequestWithContext(context.Background(), method, c.baseURL+path, body)
 	if err != nil {
 		return err
 	}
@@ -57,7 +58,7 @@ func (c *Client) do(method, path string, body, out any) error {
 		bodyReader = bytes.NewReader(b)
 	}
 
-	req, err := http.NewRequest(method, c.baseURL+path, bodyReader)
+	req, err := http.NewRequestWithContext(context.Background(), method, c.baseURL+path, bodyReader)
 	if err != nil {
 		return err
 	}

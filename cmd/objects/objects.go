@@ -14,6 +14,6 @@ func ObjectsCmd() *cobra.Command {
 		Long:  ``,
 	}
 
-	cmd.AddCommand(uploadCmd, downloadCmd, listCmd)
+	cmd.AddCommand(uploadCmd, downloadCmd, listCmd, deleteCmd, restoreCmd)
 	return cmd
 }
