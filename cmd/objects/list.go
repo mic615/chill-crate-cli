@@ -10,19 +10,25 @@ import (
 	"text/tabwriter"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"github.com/mic615/chill-crate-cli/internal/client"
 )
 
 // listCmd represents the list command
 var listCmd = &cobra.Command{
-	Use:   "list  <bucket>",
+	Use:   "list  <bucketname>",
 	Short: "List all the objects in your bucket",
 	Long:  `List all the objects in your bucket.`,
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		c := client.New()
-		objects, err := c.ListObjects(args[0])
+		groupID := viper.GetString("current_group_ID")
+		bucket, err := c.GetBucketByName(args[0], groupID)
+		if err != nil {
+			return fmt.Errorf("finding the bucket %w", err)
+		}
+		objects, err := c.ListObjects(bucket.ID)
 		if err != nil {
 			return fmt.Errorf("getting objects: %w", err)
 		}

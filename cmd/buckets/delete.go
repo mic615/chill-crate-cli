@@ -13,7 +13,7 @@ import (
 var force bool
 
 var deleteCmd = &cobra.Command{
-	Use:   "delete <bucket ID>",
+	Use:   "delete <bucketname>",
 	Short: "Delete a bucket",
 	Long:  `Delete a bucket.`,
 	Args:  cobra.ExactArgs(1),

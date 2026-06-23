@@ -6,19 +6,25 @@ import (
 	"os"
 
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"github.com/mic615/chill-crate-cli/internal/client"
 )
 
 var downloadCmd = &cobra.Command{
-	Use:   "download  <bucket> <filename> <destination>",
+	Use:   "download  <bucketname> <filename> <destination>",
 	Short: "Download an object from a bucket",
 	Long:  "Download an object from a bucket",
 	Args:  cobra.ExactArgs(3),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		bucket, fileName, dest := args[0], args[1], args[2]
+		bucketName, fileName, dest := args[0], args[1], args[2]
 		c := client.New()
-		body, err := c.DownloadObject(bucket, fileName)
+		groupID := viper.GetString("current_group_ID")
+		bucket, err := c.GetBucketByName(bucketName, groupID)
+		if err != nil {
+			return fmt.Errorf("finding the bucket %w", err)
+		}
+		body, err := c.DownloadObject(bucket.ID, fileName)
 		if err != nil {
 			return fmt.Errorf("downloading this object: %w", err)
 		}
