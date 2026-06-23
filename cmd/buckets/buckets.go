@@ -14,6 +14,6 @@ func BucketsCmd() *cobra.Command {
 		Long:  ``,
 	}
 
-	cmd.AddCommand(createCmd, listCmd)
+	cmd.AddCommand(createCmd, listCmd, deleteCmd)
 	return cmd
 }
