@@ -6,7 +6,6 @@ package buckets
 
 import (
 	"fmt"
-	"os"
 	"text/tabwriter"
 
 	"github.com/spf13/cobra"
@@ -31,11 +30,14 @@ var listCmd = &cobra.Command{
 			return fmt.Errorf("getting buckets: %w", err)
 		}
 		if len(buckets) == 0 {
-			fmt.Printf("No buckets yet — create one with chill buckets create <name>")
+			fmt.Fprint(
+				cmd.OutOrStdout(),
+				"No buckets yet — create one with chill buckets create <name>",
+			)
 			return nil
 		}
 
-		w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', 0)
+		w := tabwriter.NewWriter(cmd.OutOrStdout(), 0, 0, 3, ' ', 0)
 		for _, b := range buckets {
 			fmt.Fprintf(w, "%s\t%s\n", b.Name, b.ID)
 		}

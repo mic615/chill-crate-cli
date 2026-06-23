@@ -6,7 +6,6 @@ package objects
 
 import (
 	"fmt"
-	"os"
 	"text/tabwriter"
 
 	"github.com/spf13/cobra"
@@ -36,11 +35,14 @@ var listCmd = &cobra.Command{
 			return fmt.Errorf("getting objects: %w", err)
 		}
 		if len(objects) == 0 {
-			fmt.Printf("No objects yet — create one with chill objects upload <name>")
+			fmt.Fprint(
+				cmd.OutOrStdout(),
+				"No objects yet — create one with chill objects upload <name>",
+			)
 			return nil
 		}
 
-		w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', 0)
+		w := tabwriter.NewWriter(cmd.OutOrStdout(), 0, 0, 3, ' ', 0)
 
 		fmt.Fprintf(w, "File Name\tversion\n")
 		for _, o := range objects {

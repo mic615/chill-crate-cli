@@ -24,7 +24,7 @@ var createCmd = &cobra.Command{
 		if err != nil {
 			return fmt.Errorf("creating group %s: %w", args[0], err)
 		}
-		fmt.Printf("group name: %s created \n", group.Name)
+		fmt.Fprintf(cmd.OutOrStdout(), "group name: %s created \n", group.Name)
 		return nil
 	},
 }

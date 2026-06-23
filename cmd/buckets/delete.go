@@ -3,6 +3,7 @@ package buckets
 import (
 	"errors"
 	"fmt"
+	"io"
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
@@ -38,11 +39,12 @@ var deleteCmd = &cobra.Command{
 			Label:     deleteLabel,
 			IsConfirm: true,
 			Default:   "n",
+			Stdin:     io.NopCloser(cmd.InOrStdin()),
 		}
 		_, err = prompt.Run()
 		if err != nil {
 			if errors.Is(err, promptui.ErrAbort) {
-				fmt.Println("Delete canceled.")
+				fmt.Fprintln(cmd.OutOrStdout(), "Delete canceled.")
 				return nil // user declined
 			}
 			return err
@@ -51,7 +53,7 @@ var deleteCmd = &cobra.Command{
 			return err
 		}
 
-		fmt.Printf("%s successfully deleted\n", args[0])
+		fmt.Fprintf(cmd.OutOrStdout(), "%s successfully deleted\n", args[0])
 		return nil
 	},
 }

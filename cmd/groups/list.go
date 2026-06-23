@@ -6,7 +6,6 @@ package groups
 
 import (
 	"fmt"
-	"os"
 	"text/tabwriter"
 
 	"github.com/spf13/cobra"
@@ -27,13 +26,15 @@ var listCmd = &cobra.Command{
 			return fmt.Errorf("getting groups: %w", err)
 		}
 		if len(groups) == 0 {
-			fmt.Printf("No groups yet — create one with chill groups create <name>")
-
+			fmt.Fprintf(
+				cmd.OutOrStdout(),
+				"No groups yet — create one with chill groups create <name>\n",
+			)
 			return nil
 		}
 		current := viper.GetString("current_group_ID")
 
-		w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', 0)
+		w := tabwriter.NewWriter(cmd.OutOrStdout(), 0, 0, 3, ' ', 0)
 		for _, g := range groups {
 			marker := " "
 			if g.ID == current {

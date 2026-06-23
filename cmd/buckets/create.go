@@ -29,7 +29,7 @@ var createCmd = &cobra.Command{
 		if err != nil {
 			return fmt.Errorf("creating bucket %s: %w", args[0], err)
 		}
-		fmt.Printf("bucket name: %s created \n", bucket.Name)
+		fmt.Fprintf(cmd.OutOrStdout(), "bucket name: %s created\n", bucket.Name)
 		return nil
 	},
 }

@@ -17,8 +17,9 @@ var currentCmd = &cobra.Command{
 		if groupID == "" {
 			return fmt.Errorf("no group selected — run 'chill groups use' first")
 		}
-		fmt.Printf(
-			"You are currently using the group : %s \n",
+		fmt.Fprintf(
+			cmd.OutOrStdout(),
+			"You are currently using the group : %s\n",
 			viper.GetString("current_group_name"),
 		)
 		return nil
