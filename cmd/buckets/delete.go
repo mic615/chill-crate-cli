@@ -6,6 +6,7 @@ import (
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
+	"github.com/spf13/viper"
 
 	"github.com/mic615/chill-crate-cli/internal/client"
 )
@@ -19,6 +20,11 @@ var deleteCmd = &cobra.Command{
 	Args:  cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		c := client.New()
+		groupID := viper.GetString("current_group_ID")
+		bucket, err := c.GetBucketByName(args[0], groupID)
+		if err != nil {
+			return fmt.Errorf("finding the bucket %w", err)
+		}
 		deleteLabel := fmt.Sprintf("Are you sure you want to delete bucket %s", args[0])
 		if force {
 			deleteLabel = fmt.Sprintf(
@@ -40,7 +46,7 @@ var deleteCmd = &cobra.Command{
 			return nil
 		}
 
-		return c.DeleteBucket(args[0], force)
+		return c.DeleteBucket(bucket.ID, force)
 	},
 }
 
