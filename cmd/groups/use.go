@@ -1,11 +1,9 @@
-/*
-Copyright © 2026 NAME HERE <EMAIL ADDRESS>
-*/
-
 package groups
 
 import (
+	"errors"
 	"fmt"
+	"io"
 
 	"github.com/manifoldco/promptui"
 	"github.com/spf13/cobra"
@@ -29,7 +27,6 @@ var useCmd = &cobra.Command{
 			fmt.Printf("No groups yet — create one with chill groups create <name>")
 			return nil
 		}
-		// current := viper.GetString("current_group")
 		groupMap := make(map[string]string)
 		var groupNames []string
 		for _, g := range groups {
@@ -43,14 +40,17 @@ var useCmd = &cobra.Command{
 		}
 		_, result, err := prompt.Run()
 		if err != nil {
-			return fmt.Errorf("prompt failed %w", err)
+			if errors.Is(err, promptui.ErrInterrupt) || errors.Is(err, io.EOF) {
+				return nil
+			}
+			return fmt.Errorf("prompt failed: %w", err)
 		}
 		viper.Set("current_group_name", result)
 		viper.Set("current_group_ID", groupMap[result])
 		if err := viper.WriteConfig(); err != nil {
 			return fmt.Errorf("updating group: %w", err)
 		}
-		fmt.Printf("You choose %q, %q\n", result, groupMap[result])
+		fmt.Printf("You chose %s\n", result)
 		return nil
 	},
 }

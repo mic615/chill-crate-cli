@@ -96,11 +96,7 @@ func (c *Client) send(req *http.Request) (*http.Response, error) {
 		var apiErr struct {
 			Error string `json:"error"`
 		}
-		err := json.NewDecoder(resp.Body).Decode(&apiErr)
-		if err != nil {
-			return nil, err
-		}
-		if apiErr.Error != "" {
+		if err := json.NewDecoder(resp.Body).Decode(&apiErr); err == nil && apiErr.Error != "" {
 			return nil, fmt.Errorf("%s: %s", resp.Status, apiErr.Error)
 		}
 		return nil, fmt.Errorf("request failed: %s", resp.Status)

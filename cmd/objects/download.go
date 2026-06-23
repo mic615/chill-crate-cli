@@ -20,6 +20,9 @@ var downloadCmd = &cobra.Command{
 		bucketName, fileName, dest := args[0], args[1], args[2]
 		c := client.New()
 		groupID := viper.GetString("current_group_ID")
+		if groupID == "" {
+			return fmt.Errorf("no group selected — run 'chill groups use' first")
+		}
 		bucket, err := c.GetBucketByName(bucketName, groupID)
 		if err != nil {
 			return fmt.Errorf("finding the bucket %w", err)

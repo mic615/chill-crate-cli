@@ -70,14 +70,14 @@ func initConfig() {
 		viper.SetConfigFile(filepath.Join(home, ".chill-crate.yaml"))
 	}
 
-	viper.AutomaticEnv() // read in environment variables that match
+	viper.AutomaticEnv()
 	viper.SetDefault("api_url", "http://localhost:8081")
 
 	if err := viper.SafeWriteConfig(); err == nil {
 		fmt.Fprintln(os.Stderr, "Writing config file:", viper.ConfigFileUsed())
 	}
 	// If a config file is found, read it in.
-	if err := viper.ReadInConfig(); err == nil {
+	if err := viper.ReadInConfig(); err != nil {
 		fmt.Fprintln(os.Stderr, "Using config file:", viper.ConfigFileUsed())
 	}
 }

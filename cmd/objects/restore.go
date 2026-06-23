@@ -18,12 +18,15 @@ var restoreCmd = &cobra.Command{
 		bucketName, fileName := args[0], args[1]
 		c := client.New()
 		groupID := viper.GetString("current_group_ID")
+		if groupID == "" {
+			return fmt.Errorf("no group selected — run 'chill groups use' first")
+		}
 		bucket, err := c.GetBucketByName(bucketName, groupID)
 		if err != nil {
-			return fmt.Errorf("finding the bucket %w", err)
+			return fmt.Errorf("finding the bucket: %w", err)
 		}
 		if err := c.RestoreObject(bucket.ID, fileName); err != nil {
-			return fmt.Errorf("restoring this file %w", err)
+			return fmt.Errorf("restoring this file: %w", err)
 		}
 		fmt.Printf("restored %s \n", fileName)
 		return nil

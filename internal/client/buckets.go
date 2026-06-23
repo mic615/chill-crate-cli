@@ -7,9 +7,9 @@ type Bucket struct {
 	ID   string
 }
 
-func (c *Client) CreateBucket(name, groupId string) (Bucket, error) {
+func (c *Client) CreateBucket(name, groupID string) (Bucket, error) {
 	var bucket Bucket
-	err := c.do("POST", "/buckets", map[string]string{"name": name, "group_id": groupId}, &bucket)
+	err := c.do("POST", "/buckets", map[string]string{"name": name, "group_id": groupID}, &bucket)
 	return bucket, err
 }
 

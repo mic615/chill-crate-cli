@@ -24,6 +24,9 @@ var listCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		c := client.New()
 		groupID := viper.GetString("current_group_ID")
+		if groupID == "" {
+			return fmt.Errorf("no group selected — run 'chill groups use' first")
+		}
 		bucket, err := c.GetBucketByName(args[0], groupID)
 		if err != nil {
 			return fmt.Errorf("finding the bucket %w", err)
@@ -39,7 +42,7 @@ var listCmd = &cobra.Command{
 
 		w := tabwriter.NewWriter(os.Stdout, 0, 0, 3, ' ', 0)
 
-		fmt.Fprintf(w, "File Name\t version\n")
+		fmt.Fprintf(w, "File Name\tversion\n")
 		for _, o := range objects {
 			fmt.Fprintf(w, "%s\t%d\n", o.FileName, o.Version)
 		}

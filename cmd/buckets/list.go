@@ -23,12 +23,15 @@ var listCmd = &cobra.Command{
 	RunE: func(cmd *cobra.Command, args []string) error {
 		c := client.New()
 		groupID := viper.GetString("current_group_ID")
+		if groupID == "" {
+			return fmt.Errorf("no group selected — run 'chill groups use' first")
+		}
 		buckets, err := c.ListBuckets(groupID)
 		if err != nil {
 			return fmt.Errorf("getting buckets: %w", err)
 		}
 		if len(buckets) == 0 {
-			fmt.Printf("No buckets yet — create one with chill groups bucket <name>")
+			fmt.Printf("No buckets yet — create one with chill buckets create <name>")
 			return nil
 		}
 

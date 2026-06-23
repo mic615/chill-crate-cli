@@ -26,6 +26,9 @@ var uploadCmd = &cobra.Command{
 		bucketName, fileName := args[0], args[1]
 		c := client.New()
 		groupID := viper.GetString("current_group_ID")
+		if groupID == "" {
+			return fmt.Errorf("no group selected — run 'chill groups use' first")
+		}
 		bucket, err := c.GetBucketByName(bucketName, groupID)
 		if err != nil {
 			return fmt.Errorf("finding the bucket %w", err)
